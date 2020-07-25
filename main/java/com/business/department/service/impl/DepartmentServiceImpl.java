@@ -18,18 +18,20 @@ import com.business.department.service.DepartmentService;
 public class DepartmentServiceImpl implements DepartmentService {
 	@Autowired
 	private DepartmentJPARepository repository;
+	
+	DepartmentServiceImpl(DepartmentJPARepository departmentJPARepository){
+		this.repository=departmentJPARepository;
+	}
+	
 	@Override
 	public Department addDepartment(Department department) {
-		System.out.println(department.isActive() +" " +department.getDepartmentHead() +" " +department.getAuthorityLevel() +" " + department.getKey().getDepartmentType() + " " + department.getKey().getDepartmentName()+".");
 		// the Department has to have a department name; TODO: THROW A CUSTOM ERROR for invalid entry
 		if(department.getKey().getDepartmentName()==null)
 			return null;
 		
 		// checks to see what type of department and adjusts accordingly
 		else if(department.getKey().getDepartmentType().equals("Executive") && department.getKey().getDepartmentName()!=null && department.getAuthorityLevel()>=4 && department.getAuthorityLevel()<=7 ) {
-			System.out.println("Got here");
 			repository.save(department);
-			System.out.println("Got here2");
 			return department;
 		}
 		else if(department.getKey().getDepartmentType().equals("Facility") && department.getKey().getDepartmentName().startsWith("Facility -") && department.getAuthorityLevel()<=2 && department.getAuthorityLevel()>=1) {
@@ -41,9 +43,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public Department removeDepartmentByKey(String type, String name) {
+	public Department removeDepartmentByKey(DepartmentKey key) {
 		Department result =null;
-		DepartmentKey key = new DepartmentKey(name,type);
 		if(repository.findById(key) != null) {
 			result=repository.getOne(key);
 			repository.deleteById(key);

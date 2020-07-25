@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.business.department.model.Department;
+import com.business.department.model.DepartmentKey;
 
 
 public interface DepartmentService {
@@ -16,7 +17,7 @@ public interface DepartmentService {
 	 * Remove methods for the service
 	 */
 	// Uses the key to remove a department; returns said department
-	public Department removeDepartmentByKey(String type, String name);
+	public Department removeDepartmentByKey(DepartmentKey key);
 	// Removes all departments of a set type
 	public List<Department> removeDepartmentByType(String type);
 	/*

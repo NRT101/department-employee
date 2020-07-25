@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.business.department.model.Department;
+import com.business.department.model.DepartmentKey;
 import com.business.department.service.DepartmentService;
 
 
@@ -70,7 +71,8 @@ public class DepartmentResource {
 	 */
 	@DeleteMapping("/delete-department-by-key/{name}/{type}")
 	public Department deleteDepartmentByKey(@PathVariable String name,@PathVariable String type) {
-		Department deletedDepartment= service.removeDepartmentByKey(type, name);
+		DepartmentKey key = new DepartmentKey(name,type);
+		Department deletedDepartment= service.removeDepartmentByKey(key);
 		return deletedDepartment;
 		
 	}
