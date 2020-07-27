@@ -69,7 +69,7 @@ public class DepartmentResource {
 	/*
 	 * remove methods
 	 */
-	@DeleteMapping("/delete-department-by-key/{name}/{type}")
+	@DeleteMapping("/delete-department-by-key/name/{name}/type/{type}")
 	public Department deleteDepartmentByKey(@PathVariable String name,@PathVariable String type) {
 		DepartmentKey key = new DepartmentKey(name,type);
 		Department deletedDepartment= service.removeDepartmentByKey(key);
